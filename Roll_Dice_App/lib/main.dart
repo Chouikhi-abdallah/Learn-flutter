@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import './widgets/gradien_container.dart';
 
 void main(){
-  runApp(  const MaterialApp(
+  runApp(const MaterialApp(
     home:Scaffold(
     body:GradienContainer(
      [
