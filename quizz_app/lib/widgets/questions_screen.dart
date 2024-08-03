@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:quizz_app/widgets/answer_button.dart';
 import '../data/questions.dart';
@@ -12,9 +13,25 @@ class QuestionsScreen extends StatefulWidget {
 }
 
 class _QuestionScreenState extends State<QuestionsScreen> {
-  final currentQuestions=questions[0];
+  int currentIndex=0;
+
+  void changeIndex(){
+    setState(() {
+      currentIndex++;
+      if(currentIndex==questions.length) {
+        currentIndex=0;
+      }
+      if (kDebugMode) {
+        print('button clicked');
+      }
+  });
+  }
+
+  
+  
   @override
   Widget build(BuildContext context) {
+    final currentQuestion=questions[currentIndex];
     return SizedBox(
       width: double.infinity,
       child: Container(
@@ -26,7 +43,7 @@ class _QuestionScreenState extends State<QuestionsScreen> {
           
           children: [
              Text(
-              currentQuestions.text,
+              currentQuestion.text,
               textAlign: TextAlign.center,
               style:const  TextStyle(
                 color: Colors.white,
@@ -34,8 +51,8 @@ class _QuestionScreenState extends State<QuestionsScreen> {
               ),
             ),
             const SizedBox(height: 20,),
-            ...currentQuestions.shuffeledList().map((answer){
-              return AnswerButton(buttonString: answer, onTap: (){});
+            ...currentQuestion.shuffeledList().map((answer){
+              return AnswerButton(buttonString: answer, onTap: changeIndex);
             }),
             /*const SizedBox(height: 20),
             AnswerButton(buttonString: currentQuestions.answers[0], onTap: () {}),
