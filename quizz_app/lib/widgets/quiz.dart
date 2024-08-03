@@ -40,8 +40,8 @@ class Quiz extends StatefulWidget{
       home:
       Scaffold(
         body:GradientContainer(const 
-          [Color.fromARGB(255, 11, 13, 135),Color.fromARGB(255, 36, 39, 166),Color.fromARGB(255, 56, 58, 199)
-          ,Color.fromARGB(255, 81, 83, 186),Color.fromARGB(255, 28, 53, 152)]
+          [Color.fromRGBO(169, 94, 249, 0.597),Color.fromARGB(255, 165, 66, 240),Color.fromARGB(255, 94, 22, 103)
+          ,Color.fromARGB(255, 64, 2, 86),Color.fromARGB(255, 106, 4, 104)]
           , Alignment.topLeft
           , Alignment.bottomRight,
           activeScreen=='start-screen' ? Welcome(switchScreen):const QuestionsScreen())
