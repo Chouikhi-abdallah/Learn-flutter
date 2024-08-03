@@ -27,19 +27,19 @@ class _QuestionScreenState extends State<QuestionsScreen>{
      child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('abdallah msatka wlla ',
+        const Text('some question ',
         style: TextStyle(
           color: Colors.white,
           fontSize: 23,
         ),),
         const SizedBox(height:20),
-        ElevatedButton(onPressed: (){}, child: const Text('ay')),
+        ElevatedButton(onPressed: (){}, child: const Text('some answer')),
         const SizedBox(height:20),
-        ElevatedButton(onPressed: (){}, child: const Text('laaa')),
+        ElevatedButton(onPressed: (){}, child: const Text('some answer')),
         const SizedBox(height:20),
-        ElevatedButton(onPressed: (){}, child: const Text('chway chway')),
+        ElevatedButton(onPressed: (){}, child: const Text('some answer')),
         const SizedBox(height:20),
-        ElevatedButton(onPressed: (){}, child: const Text('sa3at sa3at'))      
+        ElevatedButton(onPressed: (){}, child: const Text('some answer'))      
       ],
      ),
    );
