@@ -1,10 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quizz_app/widgets/answer_button.dart';
 import '../data/questions.dart';
 
 class QuestionsScreen extends StatefulWidget {
-  const QuestionsScreen({super.key});
+  final void Function(String answer) onSelectAnswer;
+  const QuestionsScreen({super.key,required this.onSelectAnswer});
 
   @override
   State<QuestionsScreen> createState() {
@@ -45,10 +47,13 @@ class _QuestionScreenState extends State<QuestionsScreen> {
              Text(
               currentQuestion.text,
               textAlign: TextAlign.center,
-              style:const  TextStyle(
+              style: GoogleFonts.poppins(
                 color: Colors.white,
                 fontSize: 20,
+                fontWeight: FontWeight.bold
+              
               ),
+                
             ),
             const SizedBox(height: 20,),
             ...currentQuestion.shuffeledList().map((answer){

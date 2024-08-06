@@ -21,7 +21,8 @@ class Quiz extends StatefulWidget{
 
 
   class _QuizState extends State<Quiz>{
-   String? activeScreen='start-screen';
+  List<String> answers=[]; 
+  String? activeScreen='start-screen';
 
 
 
@@ -30,6 +31,9 @@ class Quiz extends StatefulWidget{
     setState(() {
       activeScreen='quiz-screen';
     });
+   }
+   void chooseAnswer(String answer){
+    answers.add(answer);
    } 
 
 
@@ -44,7 +48,7 @@ class Quiz extends StatefulWidget{
           ,Color.fromARGB(255, 64, 2, 86),Color.fromARGB(255, 106, 4, 104)]
           , Alignment.topLeft
           , Alignment.bottomRight,
-          activeScreen=='start-screen' ? Welcome(switchScreen):const QuestionsScreen())
+          activeScreen=='start-screen' ? Welcome(switchScreen):QuestionsScreen(onSelectAnswer: chooseAnswer))
         ),
 
       );
