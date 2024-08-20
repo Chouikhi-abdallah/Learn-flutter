@@ -59,14 +59,6 @@ class _QuestionScreenState extends State<QuestionsScreen> {
             ...currentQuestion.shuffeledList().map((answer){
               return AnswerButton(buttonString: answer, onTap: changeIndex);
             }),
-            /*const SizedBox(height: 20),
-            AnswerButton(buttonString: currentQuestions.answers[0], onTap: () {}),
-            const SizedBox(height: 20),
-            AnswerButton(buttonString: currentQuestions.answers[1], onTap: () {}),
-            const SizedBox(height: 20),
-            AnswerButton(buttonString: currentQuestions.answers[2], onTap: () {}),
-            const SizedBox(height: 20),
-            AnswerButton(buttonString: currentQuestions.answers[3], onTap: () {}),*/
           ],
         ),
       ),
