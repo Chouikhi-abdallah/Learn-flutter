@@ -1,10 +1,11 @@
 
 
-import 'package:flutter/material.dart';
-import 'package:quizz_app/widgets/gradient_container.dart';
-import 'package:quizz_app/widgets/questions_screen.dart';
-import 'package:quizz_app/widgets/welcome.dart';
+import 'package:flutter/material.dart'; // import the material package
+import 'package:quizz_app/widgets/gradient_container.dart'; // import the GradientContainer widget
+import 'package:quizz_app/widgets/questions_screen.dart'; // import the QuestionsScreen widget
+import 'package:quizz_app/widgets/welcome.dart'; // import the welcome widget
 
+// this is a stateful widget that will be used to create the quiz app
 class Quiz extends StatefulWidget{
   const Quiz({super.key});
 

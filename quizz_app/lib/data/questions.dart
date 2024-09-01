@@ -1,12 +1,14 @@
+// this is are the questions that will be displayed in the quiz
+// this are dummy data that will be used to test the app
 
 
 import 'package:quizz_app/models/quiz_question.dart';
 
 const questions = [
   QuizQuestion(
-    'What are the main building blocks of Flutter UIs?',
+    'What are the main building blocks of Flutter UIs?', // the question 
     [
-      'Widgets',
+      'Widgets',    // aswers whcich is a list of Strings  
       'Components',
       'Blocks',
       'Functions',
@@ -55,3 +57,7 @@ const questions = [
     ],
   ),
 ];
+
+// the logic here for the answer we will always has the first answer as the correct one , but every time 
+// we will shuffle the answer ( randomise their order) so the correct answer will not always be the first one int the app
+// but here we know answer[0] is the correct one
