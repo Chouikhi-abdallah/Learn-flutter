@@ -1,8 +1,10 @@
 
 
 import 'package:flutter/material.dart'; // import the material package
+import 'package:quizz_app/data/questions.dart';
 import 'package:quizz_app/widgets/gradient_container.dart'; // import the GradientContainer widget
 import 'package:quizz_app/widgets/questions_screen.dart'; // import the QuestionsScreen widget
+import 'package:quizz_app/widgets/result_screen.dart';
 import 'package:quizz_app/widgets/welcome.dart'; // import the welcome widget
 
 // this is a stateful widget that will be used to create the quiz app
@@ -22,11 +24,17 @@ class Quiz extends StatefulWidget{
 
 
   class _QuizState extends State<Quiz>{
-  List<String> answers=[]; 
+  List<String> selectedAnswers=[]; 
   String? activeScreen='start-screen';
 
 
-
+  // ignore: non_constant_identifier_names
+  void restartQuiz(){
+    setState(() {
+      activeScreen='quiz-screen';
+      selectedAnswers=[];
+    });
+  }
 
    void switchScreen(){
     setState(() {
@@ -34,7 +42,13 @@ class Quiz extends StatefulWidget{
     });
    }
    void chooseAnswer(String answer){
-    answers.add(answer);
+    selectedAnswers.add(answer);
+    if (selectedAnswers.length==questions.length){
+      setState(() {
+        activeScreen='result-screen';
+      });
+      
+    }
    } 
 
 
@@ -49,7 +63,7 @@ class Quiz extends StatefulWidget{
           ,Color.fromARGB(255, 64, 2, 86),Color.fromARGB(255, 106, 4, 104)]
           , Alignment.topLeft
           , Alignment.bottomRight,
-          activeScreen=='start-screen' ? Welcome(switchScreen):QuestionsScreen(onSelectAnswer: chooseAnswer))
+          activeScreen=='start-screen' ? Welcome(switchScreen): activeScreen=='result-screen' ?  ResultScreen(answers:selectedAnswers,func: restartQuiz,): QuestionsScreen(onSelectAnswer: chooseAnswer))
         ),
 
       );

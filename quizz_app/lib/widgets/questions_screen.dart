@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart'; //this package is used to check if the app is in debug mode
+//import 'package:flutter/foundation.dart'; //this package is used to check if the app is in debug mode
 import 'package:flutter/material.dart';// this is the material desing package of google
 import 'package:google_fonts/google_fonts.dart'; // this is a package that will be used to style the text 
 import 'package:quizz_app/widgets/answer_button.dart'; // this is a widget that will be used to create a button with a gradient background
@@ -17,16 +17,13 @@ class QuestionsScreen extends StatefulWidget { // this is a stateful widget that
 class _QuestionScreenState extends State<QuestionsScreen> {
   int currentIndex=0;
 
-  void changeIndex(){
+  void answerQuestion(String answer){
+    widget.onSelectAnswer(answer);
     setState(() {
       currentIndex++;
-      if(currentIndex==questions.length) {
-        currentIndex=0;
-      }
-      if (kDebugMode) {
-        print('button clicked');
-      }
-  });
+    });
+    
+
   }
 
   
@@ -35,10 +32,10 @@ class _QuestionScreenState extends State<QuestionsScreen> {
   Widget build(BuildContext context) {
     final currentQuestion=questions[currentIndex];
     return SizedBox( // this is a widget that will take the whole screen
-      width: double.infinity, // the width of the widget will be the width of the screen
-      child: Container( // this is a container that will contain the questions and the answers
+      width: double.infinity,   // the width of the widget will be the width of the screen
+      child: Container(   // this is a container that will contain the questions and the answers
         margin: const EdgeInsets.all(50), // this is the margin of the container
-        child: Column(// this is a column that will contain the questions and the answers
+        child: Column(  // this is a column that will contain the questions and the answers
         
           crossAxisAlignment: CrossAxisAlignment.stretch, // this is the alignment of the column crossAxisAlignement is the horizontal alignment
           mainAxisAlignment: MainAxisAlignment.center,   // this is the alignment of the column mainAxisAlignement is the vertical alignment 
@@ -51,13 +48,12 @@ class _QuestionScreenState extends State<QuestionsScreen> {
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.bold
-              
               ),
                 
             ),
             const SizedBox(height: 20,),
             ...currentQuestion.shuffeledList().map((answer){
-              return AnswerButton(buttonString: answer, onTap: changeIndex);
+              return AnswerButton(buttonString: answer, onTap:(){answerQuestion(answer);});
             }),
           ],
         ),
