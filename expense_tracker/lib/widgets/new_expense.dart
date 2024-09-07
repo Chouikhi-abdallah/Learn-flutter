@@ -10,7 +10,6 @@ class NewExpense extends StatefulWidget{
   @override
   State<NewExpense> createState() {
     return _NewExpenseState();
-   
   }
   
 

@@ -1,4 +1,5 @@
 
+import 'package:expense_tracker/widgets/charts/chart.dart';
 import 'package:expense_tracker/widgets/expenses_list/expenses_list.dart';
 import 'package:expense_tracker/widgets/new_expense.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +35,32 @@ isScrollControlled: true,
     _registredExpenses.add(expense);
   });
  }
+void _removeExpense(Expense expense){
+     int indexOfRemovedElement = _registredExpenses.indexOf(expense);
+
+  setState(() {
+    _registredExpenses.remove(expense);
+  });
+  ScaffoldMessenger.of(context).clearSnackBars();
+  ScaffoldMessenger.of(context).showSnackBar(
+     SnackBar(
+      duration: const Duration(seconds: 4),
+      content: const Text('Removed succefully'),
+      action: SnackBarAction(
+        label: 'Undo',
+        onPressed: (){
+          setState(() {
+            _registredExpenses.insert(indexOfRemovedElement,expense);
+          });
+
+        }),
+      )
+      );
+ }
   @override
   Widget build(BuildContext context) {
+    Widget mainContent=Center(child: ExpensesList(listExp: _registredExpenses,onRemove: _removeExpense,));
+
     return  Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
@@ -58,14 +83,10 @@ isScrollControlled: true,
       body:Column(
         
         children: [
-          Text('The Charts',
-          style: GoogleFonts.poppins(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-        ),),
          
-          Expanded(child: ExpensesList(listExp: _registredExpenses))
+          Chart(expenses: _registredExpenses)
+          ,Expanded(
+            child: _registredExpenses.isNotEmpty ? mainContent : const Center(child:  Text("No Expenses found add Some")) )
         ],
       )
       

@@ -40,6 +40,24 @@ String get fromattedDate{
  
 }
 
+class ExpenseBucket{
+  final MyCategory category;
+  final List<Expense> expenses;
+  ExpenseBucket({required this.category,required this.expenses});
+
+  // ignore: unrelated_type_equality_checks
+  ExpenseBucket.forCategory(List<Expense> allExpanses,this.category):expenses=allExpanses.where((e)=>e.category==category).toList();
+
+  get totalExpenses{
+    double ans=0;
+    for( Expense i in expenses){
+      ans+=i.amount;
+
+    }
+    return ans;
+  }
+}
+
 enum MyCategory{
  food,travel,leisure,work
 
