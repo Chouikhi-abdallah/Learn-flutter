@@ -62,96 +62,109 @@ class _NewExpenseState extends State<NewExpense>{
   
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(16, 48, 10, 16),
-      child: Column(
-        children: [
-          TextField(
-            maxLength: 50,
-            controller: _titleController,
-            decoration: const InputDecoration(
-              label: Text('Title'),
-            ),
-          ),
-          Row(
+    final keyboardSize=MediaQuery.of(context).viewInsets.bottom;
+    return LayoutBuilder(builder: (ctx,constraints){
+      //final width=constraints.maxWidth;
+      return SizedBox(
+      height: double.infinity,
+      width:double.infinity,
+      child: SingleChildScrollView(
+        
+        child: Container(
+          
+          padding: EdgeInsets.fromLTRB(16, 16, 10, keyboardSize+16),
+          child: Column(
             children: [
-              Expanded(
-                child: TextField(
-                keyboardType: TextInputType.number,
-                maxLength: 12,
-                controller: _amountController,
+              TextField(
+                maxLength: 50,
+                controller: _titleController,
                 decoration: const InputDecoration(
-                label: Text('Amount'),
-                prefixText: '\$',
-                            ),
-                          ),
+                  label: Text('Title'),
+                ),
               ),
-          const SizedBox(width: 15,),
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(datePicked == null ? 'No Date selected' : formatter.format(datePicked!)),
-                IconButton(onPressed: pickDate,
-                icon: const Icon(Icons.calendar_month_outlined))
-              ],
+              Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                    keyboardType: TextInputType.number,
+                    maxLength: 12,
+                    controller: _amountController,
+                    decoration: const InputDecoration(
+                    label: Text('Amount'),
+                    prefixText: '\$',
+                                ),
+                              ),
+                  ),
+              const SizedBox(width: 15,),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(datePicked == null ? 'No Date selected' : formatter.format(datePicked!)),
+                    IconButton(onPressed: pickDate,
+                    icon: const Icon(Icons.calendar_month_outlined))
+                  ],
+                  
+                ),
+              )
+        
+                ],
+              )
               
-            ),
-          )
-
-            ],
-          )
-          
-          ,
-          
-          Row(
-            children: [
-              DropdownButton(
-                value: _categoryValue,
-                
-                items: MyCategory.values.map(
-                  
-                  (category)=>DropdownMenuItem(value: category,
-                  child:Text(category.name.toUpperCase()),)
-                ).toList(),
-                 onChanged: (value){
-                  setState(() {
-                    if(value==null) {
-                      return ;
+              ,
+              
+              Row(
+                children: [
+                  DropdownButton(
+                    value: _categoryValue,
+                    
+                    items: MyCategory.values.map(
+                      
+                      (category)=>DropdownMenuItem(value: category,
+                      child:Text(category.name.toUpperCase()),)
+                    ).toList(),
+                     onChanged: (value){
+                      setState(() {
+                        if(value==null) {
+                          return ;
+                        }
+                         _categoryValue=value;
+                      });
+                      if (kDebugMode) {
+                        print(_categoryValue);
+                      }
+                     }),
+                  const Spacer(),
+                   TextButton(
+                    onPressed: (){
+                      Navigator.pop(context);
+                    },
+                    child:const Text('Cancel') ),
+                  ElevatedButton(onPressed: (){
+                    if (kDebugMode) {
+                      _submitExpenseDate();
+                      
+                      print(_titleController.text);
+                      print(_amountController.text);
+                      widget.addExpenseParams(Expense(
+                        title: _titleController.text,
+                        date: datePicked!,
+                        amount: double.parse(_amountController.text),
+                        category: _categoryValue));
+                        Navigator.pop(context);
                     }
-                     _categoryValue=value;
-                  });
-                  if (kDebugMode) {
-                    print(_categoryValue);
-                  }
-                 }),
-              const Spacer(),
-               TextButton(
-                onPressed: (){
-                  Navigator.pop(context);
-                },
-                child:const Text('Cancel') ),
-              ElevatedButton(onPressed: (){
-                if (kDebugMode) {
-                  _submitExpenseDate();
-                  
-                  print(_titleController.text);
-                  print(_amountController.text);
-                  widget.addExpenseParams(Expense(
-                    title: _titleController.text,
-                    date: datePicked!,
-                    amount: double.parse(_amountController.text),
-                    category: _categoryValue));
-                    Navigator.pop(context);
-                }
-              }, child: const Text('Save Expense')),
-             
+                  }, child: const Text('Save Expense')),
+                 
+                ],
+              ),
+        
             ],
           ),
-
-        ],
+          ),
       ),
-      );
+    );
+    });
+    
   }
   
 }
