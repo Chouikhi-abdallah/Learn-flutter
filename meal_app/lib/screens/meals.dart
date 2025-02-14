@@ -6,9 +6,8 @@ import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/widgets/meal_item.dart';
 
 class MealsScreen extends StatelessWidget{
-  final Function(Meal meal) onToggleFavourite;
 
-  const MealsScreen({super.key,  this.title,required this.meals,required this.onToggleFavourite});
+  const MealsScreen({super.key,  this.title,required this.meals});
 
   final String ?title;
   final List<Meal> meals;
@@ -19,7 +18,7 @@ class MealsScreen extends StatelessWidget{
   Widget build(BuildContext context) {
     Widget content= ListView.builder(itemCount: meals.length,itemBuilder: (cxt,index)=>
    
-      MealItem(mealItem: meals[index],onToggleFavourite: onToggleFavourite,),
+      MealItem(mealItem: meals[index]),
      
       );
       
@@ -30,12 +29,12 @@ class MealsScreen extends StatelessWidget{
           mainAxisSize: MainAxisSize.min,
           children: [
             Text("Uh oh ..... Nothing here",
-            style:Theme.of(context).textTheme.headlineLarge!.copyWith(color: Theme.of(context).colorScheme.onBackground)),
+            style:Theme.of(context).textTheme.headlineLarge!.copyWith(color: Theme.of(context).colorScheme.onSurface)),
             const SizedBox(
               height: 12,
             ),
             Text(
-              'Try choosing another category',style:Theme.of(context).textTheme.bodyLarge!.copyWith(color: Theme.of(context).colorScheme.onBackground)
+              'Try choosing another category',style:Theme.of(context).textTheme.bodyLarge!.copyWith(color: Theme.of(context).colorScheme.onSurface)
               
             )
           ],

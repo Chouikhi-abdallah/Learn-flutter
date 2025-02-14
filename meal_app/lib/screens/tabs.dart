@@ -1,52 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:meal_app/models/meal.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meal_app/providers/favourite_provider.dart';
 import 'package:meal_app/screens/categories.dart';
 import 'package:meal_app/screens/filters.dart';
 import 'package:meal_app/screens/meals.dart';
 import 'package:meal_app/widgets/main_drawer.dart';
+import 'package:meal_app/providers/filter_provider.dart';
 
-class Tabs extends StatefulWidget{
+
+class Tabs extends ConsumerStatefulWidget{
   const Tabs({super.key});
 
   @override
-  State<Tabs> createState() {
+  ConsumerState<Tabs> createState() {
     return _TabsState();
    
   }
   
 }
 
-class _TabsState extends State<Tabs>{
+class _TabsState extends ConsumerState<Tabs>{
   int _selectedPageIndex=0;
-   List<Meal> _favouriteMeals=[];
-
-   void _showMessage(String message){
-
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: 
-    Text(message)));
+   
 
 
-   }
-
-  void _toggleFavouriteMealStatus(Meal meal){
-    if(_favouriteMeals.contains(meal)){
-      _favouriteMeals.remove(meal);
-      _showMessage('The ${meal.title} is no longer a favourite');
-    }
-    else{
-      _favouriteMeals.add(meal);
-      _showMessage('The ${meal.title} is a favourite');
-
-    }
-    setState(() {
-      _favouriteMeals=_favouriteMeals;
-    });
-
-
-  }
+  
 
   void _selectPage(int index){
 
@@ -55,25 +33,32 @@ class _TabsState extends State<Tabs>{
     });
   }
 
-  void _selectScreenBasedOnString(String str){
-   if (str == 'Filters'){
-    Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>Filters()));
-   }
-   else{
+  void _selectScreenBasedOnString(String str) async {
     Navigator.of(context).pop();
-   }
+    if (str == 'Filters') {
+      final result = await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => const Filters(),
+        ),
+      );
+      if (result != null) {
+        ref.read(filtersProvider.notifier).setFilters(result);
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
 
-    print(_favouriteMeals);
+    final filterdMeals=ref.watch(filteredMealsProvider);
 
-    Widget activePageScreen= CategoriesScreen(onToggleFavoutire: _toggleFavouriteMealStatus,);
+
+    Widget activePageScreen= CategoriesScreen( meals: filterdMeals,);
     var activePageTitle='Categories';
 
     if(_selectedPageIndex==1){
-      activePageScreen=MealsScreen(meals: _favouriteMeals,onToggleFavourite: _toggleFavouriteMealStatus,);
+      final favouriteMeal=ref.watch(favouriteMealProvider);
+      activePageScreen=MealsScreen(meals: favouriteMeal);
       activePageTitle='Favourites';
     }
 

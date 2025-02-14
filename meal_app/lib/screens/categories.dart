@@ -9,15 +9,15 @@ class CategoriesScreen extends StatelessWidget{
   const CategoriesScreen(
     {
       super.key,
-      required this.onToggleFavoutire
+      required this.meals
     }
   );
+  final List<Meal> meals;
 
-  final Function(Meal meal) onToggleFavoutire;
 
   void _selectCategory(BuildContext context,Category categorie){
-    List<Meal> listOfMealByCategory= dummyMeals.where((meal) => meal.categories.contains(categorie.id)).toList();
-    Navigator.push(context, MaterialPageRoute(builder: (ctx)=> MealsScreen(title: "these are the meals in ${categorie.title}", meals: listOfMealByCategory,onToggleFavourite: onToggleFavoutire,)
+    List<Meal> listOfMealByCategory= meals.where((meal) => meal.categories.contains(categorie.id)).toList();
+    Navigator.push(context, MaterialPageRoute(builder: (ctx)=> MealsScreen(title: categorie.title, meals: listOfMealByCategory)
     ));
   }
   

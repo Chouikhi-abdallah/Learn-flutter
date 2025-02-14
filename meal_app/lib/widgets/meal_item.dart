@@ -1,15 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/screens/meal_details_screen.dart';
 import 'package:meal_app/widgets/meal_item_trait.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealItem extends StatelessWidget{
-const MealItem({super.key, required this.mealItem, required this.onToggleFavourite});
+const MealItem({super.key, required this.mealItem});
   final Meal mealItem;
-  final void Function(Meal meal) onToggleFavourite;
 
 
   String get complexityText{
@@ -20,7 +17,7 @@ const MealItem({super.key, required this.mealItem, required this.onToggleFavouri
   }
 
   void navigateToMealScreen(Meal meal,BuildContext context){
-    Navigator.push(context, MaterialPageRoute(builder: (ctx) => MealDetailsScreen(meal: meal,onToggleFavourite: onToggleFavourite,)));
+    Navigator.push(context, MaterialPageRoute(builder: (ctx) => MealDetailsScreen(meal: meal)));
   }
   @override
   Widget build(BuildContext context) {
